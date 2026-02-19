@@ -1,0 +1,179 @@
+<div class="hero">
+  <div class="flex items-center gap-2 mb-4">
+    <span class="badge badge-accent">NixOS</span>
+    <span class="badge badge-success">active</span>
+  </div>
+  <h1 class="hero-title">
+    <span class="accent-gradient">Nixul</span>
+  </h1>
+  <p class="hero-subtitle">NixOS configuration, but actually using Nix</p>
+</div>
+
+<div class="card glow-border mb-8">
+  <p class="text-secondary m-0 leading-relaxed text-base">
+    A modular NixOS configuration that treats Nix as what it actually is: a
+    functional programming language. Not YAML. Not JSON. A real programming
+    language with functions, composition, and abstraction.
+  </p>
+</div>
+
+<h2 class="text-xl font-bold mb-4 text-primary flex items-center gap-2">
+  <span>🤔</span> the problem
+</h2>
+<div class="card mb-8">
+  <p class="text-secondary leading-relaxed text-base m-0 mb-4">
+    Most NixOS configs look like this:
+  </p>
+  <pre
+    class="bg-surface p-4 rounded-lg overflow-x-auto text-sm mb-4"
+  ><code class="text-accent">{ config, pkgs, ... }:
+{
+  services.openssh.enable = true;
+  services.openssh.settings.X11Forwarding = false;
+  environment.systemPackages = [ pkgs.vim pkgs.git ];
+}</code></pre>
+  <p class="text-secondary leading-relaxed text-base m-0">
+    This works. But it's treating Nix like a glorified YAML file. You're just
+    setting keys and values. No functions. No composition. No abstraction. Just
+    configuration.
+  </p>
+</div>
+
+<h2 class="text-xl font-bold mb-4 text-primary flex items-center gap-2">
+  <span>⚡</span> what nix actually is
+</h2>
+<div class="card mb-8">
+  <p class="text-secondary leading-relaxed text-base m-0 mb-4">
+    Nix is a
+    <strong class="text-primary"
+      >pure, lazy, functional programming language</strong
+    >. It has:
+  </p>
+  <ul class="text-secondary text-base space-y-2 mb-4">
+    <li>
+      <span class="text-accent">→</span> First-class functions and lambdas
+    </li>
+    <li>
+      <span class="text-accent">→</span> Let bindings and pattern matching
+    </li>
+    <li>
+      <span class="text-accent">→</span> Lazy evaluation (values computed only
+      when needed)
+    </li>
+    <li>
+      <span class="text-accent">→</span> Higher-order functions (map, filter,
+      fold)
+    </li>
+    <li>
+      <span class="text-accent">→</span> A powerful module system with option
+      declarations
+    </li>
+  </ul>
+  <p class="text-secondary leading-relaxed text-base m-0">
+    When you treat it like programming rather than config, you get real
+    abstraction. Real composability. Real power.
+  </p>
+</div>
+
+<h2 class="text-xl font-bold mb-4 text-primary flex items-center gap-2">
+  <span>🧩</span> the nixul approach
+</h2>
+<div class="grid grid-cols-1 gap-4 mb-8">
+  <div class="card">
+    <div class="text-2xl mb-2">🎛️</div>
+    <div class="font-semibold text-primary mb-2">universal options</div>
+    <p class="text-muted text-sm m-0">
+      Define keybindings, window rules, and settings once in a universal format.
+      The same config works across different window managers.
+    </p>
+  </div>
+  <div class="card">
+    <div class="text-2xl mb-2">🔌</div>
+    <div class="font-semibold text-primary mb-2">adapters</div>
+    <p class="text-muted text-sm m-0">
+      Write adapter functions that translate universal options to Hyprland,
+      Niri, or any other compositor. Change window managers without rewriting
+      your config.
+    </p>
+  </div>
+  <div class="card">
+    <div class="text-2xl mb-2">📦</div>
+    <div class="font-semibold text-primary mb-2">true modularity</div>
+    <p class="text-muted text-sm m-0">
+      Modules aren't just files that get merged. They're functions that take
+      options and return configuration. Compose them. Extend them. Override them
+      cleanly.
+    </p>
+  </div>
+</div>
+
+<h2 class="text-xl font-bold mb-4 text-primary flex items-center gap-2">
+  <span>💡</span> example: universal keybindings
+</h2>
+<div class="card mb-8">
+  <p class="text-secondary leading-relaxed text-base m-0 mb-4">
+    Instead of repeating keybindings for every compositor:
+  </p>
+  <pre
+    class="bg-surface p-4 rounded-lg overflow-x-auto text-sm mb-4"
+  ><code class="text-accent"># Universal binding (define once)
+keybindings = {
+  "mod+return" = "terminal";
+  "mod+d" = "launcher";
+  "mod+q" = "close-window";
+};
+
+# Hyprland adapter (auto-generated)
+"bind = SUPER, Return, exec, kitty"
+"bind = SUPER, D, exec, rofi -show drun"
+"bind = SUPER, Q, killactive"
+
+# Niri adapter (auto-generated)
+"Mod+Return { spawn \"kitty\" }"
+"Mod+D { spawn \"rofi\" \"-show\" \"drun\" }"
+"Mod+Q { close-window }"</code></pre>
+  <p class="text-secondary leading-relaxed text-base m-0">
+    The adapter reads your universal keybindings and outputs the correct syntax
+    for each compositor. Add a new keybinding? It works everywhere
+    automatically.
+  </p>
+</div>
+
+<h2 class="text-xl font-bold mb-4 text-primary flex items-center gap-2">
+  <span>🎯</span> goals
+</h2>
+<div class="card mb-8">
+  <ul class="text-secondary text-base space-y-2 m-0">
+    <li>
+      <span class="text-accent">✓</span> Single source of truth for
+      configuration
+    </li>
+    <li><span class="text-accent">✓</span> Easy compositor switching</li>
+    <li><span class="text-accent">✓</span> Reusable modules across machines</li>
+    <li><span class="text-accent">✓</span> Type-safe option declarations</li>
+    <li>
+      <span class="text-accent">✓</span> Actually using Nix's programming
+      features
+    </li>
+  </ul>
+</div>
+
+<h2 class="text-xl font-bold mb-4 text-primary flex items-center gap-2">
+  <span>🔗</span> links
+</h2>
+<div class="grid grid-cols-2 gap-4">
+  <a
+    href="https://github.com/sultonov-557/nixul"
+    class="card no-underline transition"
+  >
+    <div class="text-2xl mb-2">📦</div>
+    <div class="font-semibold text-primary">repository</div>
+    <div class="text-muted text-xs">source code & setup</div>
+  </a>
+  <a href="/devlogs" class="card no-underline transition">
+    <div class="text-2xl mb-2">←</div>
+    <div class="font-semibold text-primary">back</div>
+    <div class="text-muted text-xs">all devlogs</div>
+  </a>
+</div>
+
